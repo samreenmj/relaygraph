@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+apps/api/.env
+
+# Generated files in workspace packages
+**/node_modules/
+**/dist/
+**/.next/
+**/.turbo/
+**/coverage/
+
+# Local environment files
+**/.env*
+!.env.example

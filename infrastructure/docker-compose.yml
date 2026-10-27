@@ -1,0 +1,35 @@
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+      - "127.0.0.1:3001:3000"
+    volumes:
+      - falkordb_data:/var/lib/falkordb/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: relaygraph
+      POSTGRES_USER: relaygraph
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-relaygraph_dev}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U relaygraph -d relaygraph"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  falkordb_data:
+  postgres_data:

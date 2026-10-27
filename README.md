@@ -123,3 +123,14 @@ npm run build
 ```
 
 The application will be served at `http://localhost:3000`.
+
+### API environment configuration
+
+The API reads its configuration from environment variables:
+
+- `DATABASE_URL` — PostgreSQL connection string (required by the API).
+- `FALKORDB_HOST` — FalkorDB hostname (defaults to `127.0.0.1`).
+- `FALKORDB_PORT` — FalkorDB port (defaults to `6379`).
+- `FALKORDB_GRAPH` — graph name (defaults to `relaygraph`).
+
+Start the local databases with `docker compose -f infrastructure/docker-compose.yml up -d`. Set `DATABASE_URL` before starting the API. Do not commit `.env` files or production credentials.
